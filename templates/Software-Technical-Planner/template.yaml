@@ -1,0 +1,21 @@
+name: Software-Technical-Planner
+version: 0.1.0
+description: Creates technical plans from specifications and decomposes them into tasks
+
+inputs:
+  - name: SPEC.md
+    required: true
+    description: The specification or intent document describing what needs to be built
+
+  - name: CONSTITUTION.md
+    required: false
+    description: Architectural constraints, coding standards, or guidelines the plan must respect
+
+outputs:
+  - name: PLAN.md
+    description: Technical plan with architecture decisions, task breakdown, dependencies, and risks
+
+# Include-style dependencies: other templates loaded alongside this one.
+# These provide supporting context that this template's instructions may reference.
+# Format: TemplateName or TemplateName@vX.Y.Z for specific versions.
+dependencies: []
