@@ -24,8 +24,9 @@ REPO_NAME="ai-agent-instruction-templates"
 DEFAULT_BRANCH="main"
 DEFAULT_TARGET_DIR=".agents"
 
-# Track loaded templates to detect circular dependencies
+# Track loaded templates (to skip duplicates) and loading stack (to detect cycles)
 declare -a LOADED_TEMPLATES=()
+declare -a LOADING_STACK=()
 
 # Colors (disabled if not interactive)
 if [ -t 1 ]; then
@@ -197,11 +198,22 @@ get_template_dependencies() {
         tr -d "'"
 }
 
-# Check for circular dependency
-check_circular_dependency() {
+# Check if template is already loaded (skip gracefully)
+is_already_loaded() {
     local template_name="$1"
     for loaded in "${LOADED_TEMPLATES[@]}"; do
         if [ "$loaded" == "$template_name" ]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Check for circular dependency (only in current recursion stack)
+check_circular_dependency() {
+    local template_name="$1"
+    for loading in "${LOADING_STACK[@]}"; do
+        if [ "$loading" == "$template_name" ]; then
             log_error "Circular dependency detected: $template_name"
             exit 1
         fi
@@ -258,9 +270,15 @@ load_template() {
         template_version=""
     fi
 
-    # Check for circular dependency
+    # Skip if already loaded (handles diamond dependencies gracefully)
+    if is_already_loaded "$template_name"; then
+        log_info "Template already loaded: ${template_name} (skipping)"
+        return 0
+    fi
+
+    # Check for circular dependency in current loading chain
     check_circular_dependency "$template_name"
-    LOADED_TEMPLATES+=("$template_name")
+    LOADING_STACK+=("$template_name")
 
     log_info "Loading template: ${template_name}"
 
@@ -317,6 +335,10 @@ EOF
             fi
         done <<< "$deps"
     fi
+
+    # Mark as loaded and remove from loading stack
+    LOADED_TEMPLATES+=("$template_name")
+    unset 'LOADING_STACK[-1]'
 }
 
 # Main

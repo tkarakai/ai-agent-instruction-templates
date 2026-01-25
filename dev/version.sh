@@ -39,7 +39,7 @@ log_error() { echo -e "${RED}[ERROR]${NC} $1" >&2; }
 
 # Get script directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TEMPLATES_DIR="${SCRIPT_DIR}/templates"
+TEMPLATES_DIR="${SCRIPT_DIR}/../templates"
 
 # Parse semantic version
 # Returns: MAJOR MINOR PATCH PRERELEASE
