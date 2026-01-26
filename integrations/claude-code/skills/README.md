@@ -1,0 +1,90 @@
+# Claude Code Skills for Template Loading
+
+## What These Skills Are
+
+These skills are part of a **Claude Code plugin** that allows users to load AI agent instruction templates into their projects via Claude Code's plugin system.
+
+When users add this repository as a Claude Code marketplace and install the plugin, they get access to skills namespaced under `ait` (AI Templates):
+
+- `/ait:load-template` - Load a template into the current project
+- `/ait:list-templates` - List available templates
+
+## Important Distinction: Two Types of Skills
+
+This framework uses "skills" in two different ways:
+
+| Type | Description | Location |
+|------|-------------|----------|
+| **Skills for Delivery** | These skills (`load-template`, `list-templates`) that help load templates | This directory |
+| **Skills as Dependencies** | External skills that templates may reference in their `template.yaml` | NOT in this repo |
+
+**Skills as Dependencies** are capabilities like `github-pr` or `code-analysis` that a template might use during execution. These are provided by other plugins or Claude Code itself—not by this repository.
+
+For details on declaring skill dependencies in templates, see [Skills as Dependencies](../../../README.md#skills-as-dependencies) in the root README.
+
+## Installation of Skills for Template Delivery
+
+### 1. Add the Marketplace
+
+In Claude Code, run:
+
+```bash
+/plugin marketplace add tkarakai/ai-agent-instruction-templates
+```
+
+### 2. Use the Skills
+
+Once the marketplace is added, the skills are available:
+
+```bash
+# List available templates
+/ait:list-templates
+
+# Load a template into your project
+/ait:load-template Software-Technical-Planner
+
+# Load a specific version
+/ait:load-template Software-Technical-Planner@v1.0.0
+```
+
+### Plugin Files
+
+- `.claude-plugin/marketplace.json` - Plugin registration
+- `integrations/claude-code/skills/*/SKILL.md` - Individual skill definitions
+
+## What These Skills Are NOT
+
+**These skills are NOT used in this repository itself.**
+
+Unlike typical skills that provide capabilities for the repo they reside in, these skills are:
+
+1. **Hosted here** - in the template library repository
+2. **Used elsewhere** - in target projects where users want to load templates
+
+## How It Works
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  This Repository (ai-agent-instruction-templates)           │
+│                                                             │
+│  - Hosts templates in /templates/                           │
+│  - Hosts these skills as a Claude Code plugin               │
+│  - load.sh provides tool-agnostic loading                   │
+└─────────────────────────────────────────────────────────────┘
+                          │
+                          │ User adds marketplace & installs plugin
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Target Project (user's project)                            │
+│                                                             │
+│  User runs: /ait:load-template Software-Technical-Planner   │
+│                                                             │
+│  Result: Template downloaded to .agents/ directory          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Alternative: Tool-Agnostic Loading
+
+These skills are a convenience for Claude Code users. The primary, tool-agnostic method is the `load.sh` script documented in the [Quick Start](../../../README.md#quick-start) section of the root README.
+
+The script works with any AI tool, not just Claude Code.

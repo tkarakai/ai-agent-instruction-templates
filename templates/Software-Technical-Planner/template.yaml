@@ -19,3 +19,8 @@ outputs:
 # These provide supporting context that this template's instructions may reference.
 # Format: TemplateName or TemplateName@vX.Y.Z for specific versions.
 dependencies: []
+
+# Anthropic Skills this template may use as capabilities.
+# These are declarative only - the loader does NOT validate or fetch skills.
+# NOTE: Skills are NOT version-controlled. This is a known limitation for auditability.
+skills: []

@@ -1,0 +1,20 @@
+{
+  "name": "ait",
+  "displayName": "AI Agent Instruction Templates",
+  "version": "1.0.0",
+  "description": "Load and use versioned instruction templates for AI coding agents",
+  "author": "tkarakai",
+  "repository": "https://github.com/tkarakai/ai-agent-instruction-templates",
+  "skills": [
+    {
+      "name": "load-template",
+      "file": "integrations/claude-code/skills/load-template/SKILL.md"
+    },
+    {
+      "name": "list-templates",
+      "file": "integrations/claude-code/skills/list-templates/SKILL.md"
+    }
+  ],
+  "keywords": ["templates", "agents", "instructions", "planning"],
+  "license": "MIT"
+}
