@@ -89,6 +89,13 @@ ai-agent-instruction-templates/
 ├── README.md                    # This file
 ├── RUNBOOK.md                   # Usage workflow guide
 ├── load.sh                      # Template loader (for users)
+├── .claude-plugin/              # Claude Code plugin registration
+│   └── marketplace.json
+├── plugins/                     # Claude Code plugin skills
+│   ├── load-template/
+│   │   └── SKILL.md
+│   └── list-templates/
+│       └── SKILL.md
 ├── dev/
 │   └── version.sh               # Version management (for maintainers)
 └── templates/
@@ -126,6 +133,10 @@ ai-agent-instruction-templates/
    # Include-style dependencies (loaded alongside this template)
    # Format: TemplateName or TemplateName@vX.Y.Z
    dependencies: []
+
+   # Anthropic Skills this template may use as capabilities (declarative only)
+   # See "Anthropic Skills and This Framework" section below
+   skills: []
    ```
 
 3. Create `README.md` documenting the template:
@@ -148,9 +159,10 @@ ai-agent-instruction-templates/
 
 ### Template Checklist
 
-- [ ] `template.yaml` with name, version, description, inputs, outputs
+- [ ] `template.yaml` with name, version, description, inputs, outputs, dependencies, skills
 - [ ] `README.md` documenting purpose, artifacts, and usage
 - [ ] `files/AGENTS.md` with clear instructions
+- [ ] Skills section in AGENTS.md if any skills are declared
 - [ ] Instructions reference `.loaded-templates.yaml` for commit metadata
 - [ ] Git tag created via `dev/version.sh`
 
@@ -235,3 +247,76 @@ Circular dependencies are detected and will cause the loader to abort.
 ## Customization
 
 Templates follow the [shadcn](https://ui.shadcn.com/) model: once copied into a project, you own the files. Users can modify `.agents/*/AGENTS.md` freely. Customizations are not tracked upstream.
+
+## Anthropic Skills and This Framework
+
+### What Are Anthropic Skills?
+
+[Anthropic Skills](https://agentskills.io/) are reusable capabilities that AI agents can invoke in Claude Code and other compatible tools. Skills are typically:
+- Invoked via slash commands (e.g., `/commit`, `/review-pr`)
+- Provided by plugins or built into the tool
+- Executed at runtime, not stored in your project
+
+### How Skills Relate to This Framework
+
+This framework and Anthropic Skills are **complementary, not competing**:
+
+| Aspect | This Framework | Anthropic Skills |
+|--------|----------------|------------------|
+| **Purpose** | Detailed, structured instructions | Atomic, reusable actions |
+| **Scope** | Complete workflow guidance | Single-task capabilities |
+| **Storage** | Loaded into project temporarily | Provided by tool/plugins |
+| **Versioning** | Semantic versions with git tags | Not version-controlled |
+| **Tool Agnostic** | Yes | Varies by tool |
+
+Think of it this way:
+- **Templates** tell the agent *what to do and how* (the playbook)
+- **Skills** give the agent *capabilities to use* (the toolkit)
+
+### Skills as Delivery: Claude Code Plugin
+
+This repository includes a Claude Code plugin that makes templates accessible via skills:
+
+```bash
+# Add the marketplace (Claude Code only)
+/plugin marketplace add tkarakai/ai-agent-instruction-templates
+
+# Use the skills
+/list-templates
+/load-template Software-Technical-Planner
+```
+
+The plugin is an **additional** delivery channel. The `load.sh` script remains the primary, tool-agnostic method.
+
+Plugin files:
+- `.claude-plugin/marketplace.json` - Plugin registration
+- `plugins/*/SKILL.md` - Individual skill definitions
+
+### Skills as Dependencies
+
+Templates can declare skills they use as capabilities in `template.yaml`:
+
+```yaml
+skills:
+  - github-pr          # For PR interactions
+  - code-analysis      # For static analysis
+```
+
+This is **declarative only**:
+- The loader does NOT fetch or validate skills
+- Skills are runtime capabilities, not loadable assets
+- Templates document skills for user awareness
+
+### Known Limitations
+
+**Skill Versioning**: Unlike template dependencies which have explicit versions and commit hashes for auditability, skills are NOT version-controlled by this framework. A skill's behavior may change over time without notice.
+
+This means:
+- Template outputs reference exact template versions used
+- Skill behavior at execution time cannot be traced to a specific version
+- For auditable workflows, document which skills were used manually
+
+If auditability is critical for your use case, consider:
+1. Documenting skill versions manually in commit messages
+2. Using template-only workflows for regulated environments
+3. Checking skill changelogs before critical operations
