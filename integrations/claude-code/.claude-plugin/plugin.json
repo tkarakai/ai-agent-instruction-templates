@@ -1,0 +1,11 @@
+{
+  "name": "ait",
+  "description": "Load and use versioned instruction templates for AI coding agents",
+  "version": "1.0.0",
+  "author": {
+    "name": "tkarakai"
+  },
+  "repository": "https://github.com/tkarakai/ai-agent-instruction-templates",
+  "keywords": ["templates", "agents", "instructions", "planning"],
+  "license": "MIT"
+}

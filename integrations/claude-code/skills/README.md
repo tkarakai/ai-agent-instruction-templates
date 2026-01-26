@@ -32,9 +32,27 @@ In Claude Code, run:
 /plugin marketplace add tkarakai/ai-agent-instruction-templates
 ```
 
-### 2. Use the Skills
+### 2. Install the Plugin
 
-Once the marketplace is added, the skills are available:
+After adding the marketplace, install the plugin:
+
+```bash
+/plugin install ait@ai-agent-instruction-templates
+```
+
+### 3. Restart and Verify
+
+Restart Claude Code to load the new plugin, then verify installation:
+
+```bash
+/skills
+```
+
+You should see `load-template` and `list-templates` listed under "Plugin skills (ait)".
+
+### 4. Use the Skills
+
+Once verified, the skills are available:
 
 ```bash
 # List available templates
@@ -46,6 +64,8 @@ Once the marketplace is added, the skills are available:
 # Load a specific version
 /ait:load-template Software-Technical-Planner@v1.0.0
 ```
+
+**Note:** Plugin skills might not appear in autocomplete when typing `/`. You must type the full command (e.g., `/ait:load-template`) or ask Claude to perform the task in natural language (e.g., "list the available templates").
 
 ### Plugin Files
 
