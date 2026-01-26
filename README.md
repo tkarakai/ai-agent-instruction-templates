@@ -277,24 +277,15 @@ Think of it this way:
 
 ### Skills as Delivery: Claude Code Plugin
 
-This repository includes a Claude Code plugin that makes templates accessible via skills:
+This repository includes a Claude Code plugin (`ait`) that makes templates accessible via slash commands like `/ait:load-template`.
 
-```bash
-# Add the marketplace (Claude Code only)
-/plugin marketplace add tkarakai/ai-agent-instruction-templates
+For installation and usage details, see [integrations/claude-code/skills/README.md](integrations/claude-code/skills/README.md).
 
-# Use the skills (namespaced as /ait:skill-name)
-/ait:list-templates
-/ait:load-template Software-Technical-Planner
-```
-
-The plugin is an **additional** delivery channel. The `load.sh` script remains the primary, tool-agnostic method.
-
-Plugin files:
-- `.claude-plugin/marketplace.json` - Plugin registration
-- `integrations/claude-code/skills/*/SKILL.md` - Individual skill definitions
+The plugin is an **additional** delivery channel. The `load.sh` script remains the primary, tool-agnostic method (see [Quick Start](#quick-start)).
 
 ### Skills as Dependencies
+
+> **Note:** These are *external* skills that templates may use, not the delivery skills above. See [Important Distinction](integrations/claude-code/skills/README.md#important-distinction-two-types-of-skills) for clarification.
 
 Templates can declare skills they use as capabilities in `template.yaml`:
 
