@@ -1,5 +1,5 @@
 {
-  "name": "ai-agent-instruction-templates",
+  "name": "ait",
   "displayName": "AI Agent Instruction Templates",
   "version": "1.0.0",
   "description": "Load and use versioned instruction templates for AI coding agents",
@@ -8,11 +8,11 @@
   "skills": [
     {
       "name": "load-template",
-      "file": "plugins/load-template/SKILL.md"
+      "file": "integrations/claude-code/skills/load-template/SKILL.md"
     },
     {
       "name": "list-templates",
-      "file": "plugins/list-templates/SKILL.md"
+      "file": "integrations/claude-code/skills/list-templates/SKILL.md"
     }
   ],
   "keywords": ["templates", "agents", "instructions", "planning"],

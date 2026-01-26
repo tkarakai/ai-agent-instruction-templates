@@ -36,12 +36,12 @@ Available templates:
 ## Next Steps
 
 After listing templates:
-1. Choose a template that fits your task
+1. Choose an instruction template that fits your role
 2. Use `/load-template <name>` to load it
 3. Optionally specify a version: `/load-template <name>@v1.0.0`
 
 ## Notes
 
-- Templates are versioned independently
+- Instruction templates are versioned independently
 - Use `@vX.Y.Z` suffix to load a specific version
 - Omit version to get the latest

@@ -1,6 +1,6 @@
 ---
 name: load-template
-description: Load an AI agent instruction template into the current project. Use when you need structured instructions for a specific task like technical planning.
+description: Load an AI agent instruction template into the current project. Use when you need structured instructions for a specific role like technical planning.
 ---
 
 # Load Template
@@ -35,7 +35,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/tkarakai/ai-agent-instru
 
 1. Read `.agents/<template-name>/AGENTS.md` for the agent instructions
 2. Verify required input artifacts exist (documented in the instructions)
-3. Follow the instructions to complete the task
+3. Follow the instructions to complete the tasks of the role
 4. Use `.agents/.loaded-templates.yaml` for commit/PR metadata
 
 ## Notes

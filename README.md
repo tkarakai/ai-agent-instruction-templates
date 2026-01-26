@@ -91,11 +91,13 @@ ai-agent-instruction-templates/
 ├── load.sh                      # Template loader (for users)
 ├── .claude-plugin/              # Claude Code plugin registration
 │   └── marketplace.json
-├── plugins/                     # Claude Code plugin skills
-│   ├── load-template/
-│   │   └── SKILL.md
-│   └── list-templates/
-│       └── SKILL.md
+├── integrations/                # Tool-specific integrations
+│   └── claude-code/             # Claude Code plugin
+│       └── skills/
+│           ├── load-template/
+│           │   └── SKILL.md
+│           └── list-templates/
+│               └── SKILL.md
 ├── dev/
 │   └── version.sh               # Version management (for maintainers)
 └── templates/
@@ -281,16 +283,16 @@ This repository includes a Claude Code plugin that makes templates accessible vi
 # Add the marketplace (Claude Code only)
 /plugin marketplace add tkarakai/ai-agent-instruction-templates
 
-# Use the skills
-/list-templates
-/load-template Software-Technical-Planner
+# Use the skills (namespaced as /ait:skill-name)
+/ait:list-templates
+/ait:load-template Software-Technical-Planner
 ```
 
 The plugin is an **additional** delivery channel. The `load.sh` script remains the primary, tool-agnostic method.
 
 Plugin files:
 - `.claude-plugin/marketplace.json` - Plugin registration
-- `plugins/*/SKILL.md` - Individual skill definitions
+- `integrations/claude-code/skills/*/SKILL.md` - Individual skill definitions
 
 ### Skills as Dependencies
 
