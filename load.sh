@@ -193,14 +193,17 @@ get_template_dependencies() {
     curl -fsSL "$yaml_url" 2>/dev/null | \
         sed -n '/^dependencies:/,/^[a-z]/p' | \
         grep '^\s*-' | \
-        sed 's/.*-[[:space:]]*//' | \
+        sed 's/^[[:space:]]*-[[:space:]]*//' | \
         tr -d '"' | \
-        tr -d "'"
+        tr -d "'" || true
 }
 
 # Check if template is already loaded (skip gracefully)
 is_already_loaded() {
     local template_name="$1"
+    if [ ${#LOADED_TEMPLATES[@]} -eq 0 ]; then
+        return 1
+    fi
     for loaded in "${LOADED_TEMPLATES[@]}"; do
         if [ "$loaded" == "$template_name" ]; then
             return 0
@@ -212,6 +215,9 @@ is_already_loaded() {
 # Check for circular dependency (only in current recursion stack)
 check_circular_dependency() {
     local template_name="$1"
+    if [ ${#LOADING_STACK[@]} -eq 0 ]; then
+        return 0
+    fi
     for loading in "${LOADING_STACK[@]}"; do
         if [ "$loading" == "$template_name" ]; then
             log_error "Circular dependency detected: $template_name"
@@ -338,7 +344,7 @@ EOF
 
     # Mark as loaded and remove from loading stack
     LOADED_TEMPLATES+=("$template_name")
-    unset 'LOADING_STACK[-1]'
+    unset 'LOADING_STACK[${#LOADING_STACK[@]}-1]'
 }
 
 # Main
