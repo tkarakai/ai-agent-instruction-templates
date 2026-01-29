@@ -24,7 +24,29 @@ For details on declaring skill dependencies in templates, see [Skills as Depende
 
 ## Installation of Skills for Template Delivery
 
-### 1. Add the Marketplace
+### Quick Install with npx add-skill
+
+**Prerequisites:**
+- Node.js and npm installed on your system
+
+The fastest way to install these skills is using `npx add-skill`:
+
+```bash
+# Install all skills from this repository
+npx add-skill tkarakai/ai-agent-instruction-templates
+
+# Or install a specific skill
+npx add-skill tkarakai/ai-agent-instruction-templates/load-template
+npx add-skill tkarakai/ai-agent-instruction-templates/list-templates
+```
+
+After installation, restart Claude Code and verify with `/skills`. You should see `load-template` and `list-templates` listed under "Plugin skills (ait)".
+
+**Note:** Plugin skills might not appear in autocomplete when typing `/`. You must type the full command (e.g., `/ait:load-template`) or ask Claude to perform the task in natural language (e.g., "list the available templates").
+
+### Manual Installation via Marketplace
+
+#### 1. Add the Marketplace
 
 In Claude Code, run:
 
@@ -32,7 +54,7 @@ In Claude Code, run:
 /plugin marketplace add tkarakai/ai-agent-instruction-templates
 ```
 
-### 2. Install the Plugin
+#### 2. Install the Plugin
 
 After adding the marketplace, install the plugin:
 
@@ -40,7 +62,7 @@ After adding the marketplace, install the plugin:
 /plugin install ait@ai-agent-instruction-templates
 ```
 
-### 3. Restart and Verify
+#### 3. Restart and Verify
 
 Restart Claude Code to load the new plugin, then verify installation:
 
@@ -50,7 +72,7 @@ Restart Claude Code to load the new plugin, then verify installation:
 
 You should see `load-template` and `list-templates` listed under "Plugin skills (ait)".
 
-### 4. Use the Skills
+#### 4. Use the Skills
 
 Once verified, the skills are available:
 
@@ -67,7 +89,7 @@ Once verified, the skills are available:
 
 **Note:** Plugin skills might not appear in autocomplete when typing `/`. You must type the full command (e.g., `/ait:load-template`) or ask Claude to perform the task in natural language (e.g., "list the available templates").
 
-### Plugin Files
+#### Plugin Files
 
 - `.claude-plugin/marketplace.json` - Plugin registration
 - `integrations/claude-code/skills/*/SKILL.md` - Individual skill definitions
