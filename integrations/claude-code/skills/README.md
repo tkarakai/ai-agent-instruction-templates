@@ -35,9 +35,12 @@ The fastest way to install these skills is using `npx add-skill`:
 # Install all skills from this repository
 npx add-skill tkarakai/ai-agent-instruction-templates
 
-# Or install a specific skill
-npx add-skill tkarakai/ai-agent-instruction-templates/load-template
-npx add-skill tkarakai/ai-agent-instruction-templates/list-templates
+# Or install specific skills
+npx add-skill tkarakai/ai-agent-instruction-templates --skill load-template
+npx add-skill tkarakai/ai-agent-instruction-templates --skill list-templates
+
+# Or install both skills at once:
+npx add-skill tkarakai/ai-agent-instruction-templates --skill load-template --skill list-templates
 ```
 
 After installation, restart Claude Code and verify with `/skills`. You should see `load-template` and `list-templates` listed under "Plugin skills (ait)".
