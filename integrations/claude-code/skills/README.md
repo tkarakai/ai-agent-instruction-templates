@@ -24,23 +24,23 @@ For details on declaring skill dependencies in templates, see [Skills as Depende
 
 ## Installation of Skills for Template Delivery
 
-### Quick Install with npx add-skill
+### Quick Install with npx skills add
 
 **Prerequisites:**
 - Node.js and npm installed on your system
 
-The fastest way to install these skills is using `npx add-skill`:
+The fastest way to install these skills is using `npx skills add`:
 
 ```bash
 # Install all skills from this repository
-npx add-skill tkarakai/ai-agent-instruction-templates
+npx skills add tkarakai/ai-agent-instruction-templates
 
 # Or install specific skills
-npx add-skill tkarakai/ai-agent-instruction-templates --skill load-template
-npx add-skill tkarakai/ai-agent-instruction-templates --skill list-templates
+npx skills add tkarakai/ai-agent-instruction-templates --skill load-template
+npx skills add tkarakai/ai-agent-instruction-templates --skill list-templates
 
 # Or install both skills at once:
-npx add-skill tkarakai/ai-agent-instruction-templates --skill load-template --skill list-templates
+npx skills add tkarakai/ai-agent-instruction-templates --skill load-template --skill list-templates
 ```
 
 After installation, restart Claude Code and verify with `/skills`. You should see `load-template` and `list-templates` listed under "Plugin skills (ait)".
